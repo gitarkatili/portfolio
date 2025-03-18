@@ -3,56 +3,86 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Emre Balcı | Hello</title>
+	<title>Emre Balcı | Welcome</title>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-	<script>
-  		(function() {
-    	window.addEventListener('DOMContentLoaded', () => {
-      	const colorArray = ["#ff540f"];
-      	const headerr = document.querySelector('.emre__balci');
-      		if(headerr) {
-        		const colorRandom = Math.floor(Math.random() * colorArray.length);
-        		console.log(colorArray[colorRandom]);
-        		headerr.style.color = colorArray[colorRandom];
-      			}; 
-	    	});
-  		})()
-	</script>
-	<style>
-		.nav a {
-			display: inline; text-decoration: none; color: black; font-family: Roboto Condensed; font-weight: normal; font-size: 18px; transition: 0.3s; padding: 15px;
-		}
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-		.nav a:hover {
-			color: gray; font-size: 22px; font-weight: bold; padding: 10px;
-		}
-	</style>
 </head>
-<body style="background-color: #e3e3e3;">
-	<div style="margin-top: 5% !important; width: 75%; margin: auto;">
-		<h1 class="emre__balci animate__animated animate__fadeIn animate__slow" style="margin: auto; text-align: center; font-family: Francois One; font-weight: normal; font-size: 108px; transform: scale(1, .85); letter-spacing: -2pt; text-shadow: 2px 2px black;">emre balcı</h1>
-
-		<h1 class="animate__animated animate__fadeIn animate__delay-1s" style="font-family: Roboto Condensed; font-weight: bold; text-align: center; margin-top: -16px; margin-bottom: 6%; letter-spacing: 5pt; color: black">freelance designer</h1>
-
-		<div class="animate__animated animate__fadeIn animate__delay-1s">
-
-			<ul class="nav" style="border: 2px solid #ccc; border-width: 2px 0; list-style: none; margin: 0; padding: 15px; text-align: center; height: 20px;">
-				<li style="display: inline"><a href="">home</a></li>
-				<li style="display: inline"><a href="">about</a></li>
-				<li style="display: inline"><a href="">reel</a></li>
-				<li style="display: inline"><a href="">portfolio</a></li>
-			</ul>
+<body>
+<div id="blob"></div>
+<div id="blur"></div>
 
 
-			<p>this is some text</p>
+<div style="padding-top: 5%; width: 75%; margin: auto;">
+		<h1 class="emre__balci animate__animated animate__fadeIn animate__slow" style="margin: auto; text-align: center; font-family: Outfit; font-weight: bold; font-size: 108px; transform: scale(1, .9);">test site</h1>
 
+		<div class="home-box"></div>
+
+</div>
+
+
+<div id="menu">
+	<div class="content  animate__animated animate__fadeIn animate__slow animate__delay-1s">
+		<div id="pill"></div>
+		<div id="items">
+			<div class="item">Home</div>
+			<div class="item">Work</div>
+			<div class="item">About</div>
+			<div class="item">Contact</div>
 		</div>
-
 	</div>
-	
-	
+</div>
+
+<!-- https://opensource.org/license/mit/ -->
 </body>
+
+
+<script>
+	const blob = document.getElementById("blob");
+
+document.body.onpointermove = event => {
+  const { clientX, clientY } = event;
+  blob.animate({
+    left:`${clientX}px`, 
+    top:`${clientY}px`
+  }, { duration: 3000, fill: "forwards"});
+};
+</script>
+
+<script>
+const PILL = document.querySelector('#pill');
+const MENU_LINKS = document.querySelectorAll('.item');
+const MENU_LINKS_PARENT = document.querySelector('#items');
+
+let selected = 0;
+
+MENU_LINKS.forEach((e, i) => {
+  e.addEventListener('click', (e) => {
+    selected = i;
+    setPill();
+  });
+});
+
+function setPill() {
+  MENU_LINKS.forEach((e, i) => {
+    if (i === selected) {
+      const dimensions = e.getBoundingClientRect();
+      PILL.style.width = dimensions.width + 'px';
+      PILL.style.height = dimensions.height + 'px';
+      PILL.style.left = dimensions.left - MENU_LINKS_PARENT.getBoundingClientRect().left + 'px';
+
+      e.classList.add('active');
+    } else {
+      e.classList.remove('active');
+    }
+  });
+};
+
+setPill();
+</script>
+
 </html>
