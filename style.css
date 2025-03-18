@@ -102,6 +102,13 @@ border: 1px solid rgba(255, 255, 255, 0.21);
   backdrop-filter: blur(150px);
 }
 
+@media only screen and (max-width: 400px) {
+  #blob #blur{
+    display: none;
+  }
+}
+
+
 .home-box {
     display: flex;
   background: rgba(255, 255, 255, 0.17);
