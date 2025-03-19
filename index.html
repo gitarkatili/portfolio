@@ -2,87 +2,111 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title>Emre Balcı | Welcome</title>
-
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Roboto:ital,wght@0,100..900;1,100..900&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css" rel="stylesheet">
+	<style type="text/css">
+		.emre h1 {
+			font-weight: normal;
+			letter-spacing: 0px;
+			text-shadow: -20px 20px 15px rgba(0,0,0, 0.3);
+			text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000;
+			color: #fff;
+		}
 
+		.balci h1 {
+			font-weight: bold;
+			letter-spacing: -12px;
+			text-shadow: -20px 20px 12px rgba(0,0,0, 0.06);
+		}
+
+		.whois {
+            margin: 2rem;
+            margin-top: 109%;
+            margin-left: 60%;
+            width: 100%;
+            font-size: 36px;
+           	white-space:nowrap;
+            opacity: .3;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+		}
+		.links {
+			    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity .2s ease-in-out;
+    -ms-transition: opacity .2s ease-in-out;
+    -o-transition: opacity .2s ease-in-out;
+    transition: opacity .2s ease-in-out;
+		}
+
+		.links:hover {
+			opacity: .5;
+		}
+
+		.links:hover .tooltiptext {
+			visibility: visible;
+		}
+
+		.tooltiptext {
+			visibility: hidden;
+		}
+
+		.links .tooltiptext {
+  			visibility: hidden;
+  			width: 120px;
+  			background-color: black;
+  			color: #fff;
+  			text-align: center;
+  			padding: 5px 0;
+  			border-radius: 2em;
+  			position: absolute;
+  			z-index: 1;
+  			font-family: Roboto;
+	</style>
 </head>
-<body>
-<div id="blob"></div>
-<div id="blur"></div>
+<body style="background-color: #fff; overflow-y: hidden;" class="cssanimation blurIn">
 
+	<div style="position: absolute;">
 
-<div style="padding-top: 5%; width: 75%; margin: auto;">
-		<h1 class="emre__balci animate__animated animate__fadeIn animate__slow" style="margin: auto; text-align: center; font-family: Outfit; font-weight: bold; font-size: 108px; transform: scale(1, .9);">test site</h1>
+		<div class="whois">
+            freelance video editor / graphic designer
+        </div>
+		<div class="emre" style="margin-left: 35%; margin-top: -5%; display: flex; font-size: 120px; opacity: .7;">
+			<h1 class="h1 ee">E</h1>
+			<h1 class="h1 m" style="transform: scale(1, .8); padding-top: 22px;">m</h1>
+			<h1 class="h1 r" style="transform: scale(1, .8); padding-top: 22px; letter-spacing: -5px;">r</h1>
+			<h1 class="h1 e" style="transform: scale(1, .8); padding-top: 22px;">e</h1>
+		</div>
 
-		<div class="home-box"></div>
+		<div class="balci" style="margin-top: -85%; margin-left: 60%; display: flex; font-size: 138px; opacity: .8;">
+			<h1 class="h1 b">B</h1>
+			<h1 class="h1 a" style="transform: scale(1, .8); padding-top: 22px;">a</h1>
+			<h1 class="h1 l">l</h1>
+			<h1 class="h1 c" style="transform: scale(1, .8); padding-top: 22px;">c</h1>
+			<h1 class="h1 i" style="transform: scale(1, .8); padding-top: 22px;">ı</h1>
+		</div>
 
-</div>
+		<div class="links" style="margin-top: -120%; margin-left: 200%;">
+			<a href="https://behance.com/e-balci"><img class="links" src="be.svg" width="100px"/></a>
+			<span class="tooltiptext">Behance</span>
+		</div>
 
+		<div class="links" style="margin-top: 7%; margin-left: 180%;">
+			<a href="https://bionluk.com/ebalci"><img class="links" src="bi.svg" width="110px"/></a>
+			<span class="tooltiptext">bionluk</span>
+		</div>
 
-<div id="menu">
-	<div class="content  animate__animated animate__fadeIn animate__slow animate__delay-1s">
-		<div id="pill"></div>
-		<div id="items">
-			<div class="item">Home</div>
-			<div class="item">Work</div>
-			<div class="item">About</div>
-			<div class="item">Contact</div>
+		<div class="links" style="margin-top: 5%; margin-left: 200%;">
+			<a href="#"><img class="links" src="mail.svg" width="110px"/></a>
+			<span class="tooltiptext" style="font-size: 60%;">mail@emrebalci.com.tr</span>
 		</div>
 	</div>
-</div>
 
-<!-- https://opensource.org/license/mit/ -->
 </body>
-
-
-<script>
-	const blob = document.getElementById("blob");
-
-document.body.onpointermove = event => {
-  const { clientX, clientY } = event;
-  blob.animate({
-    left:`${clientX}px`, 
-    top:`${clientY}px`
-  }, { duration: 3000, fill: "forwards"});
-};
-</script>
-
-<script>
-const PILL = document.querySelector('#pill');
-const MENU_LINKS = document.querySelectorAll('.item');
-const MENU_LINKS_PARENT = document.querySelector('#items');
-
-let selected = 0;
-
-MENU_LINKS.forEach((e, i) => {
-  e.addEventListener('click', (e) => {
-    selected = i;
-    setPill();
-  });
-});
-
-function setPill() {
-  MENU_LINKS.forEach((e, i) => {
-    if (i === selected) {
-      const dimensions = e.getBoundingClientRect();
-      PILL.style.width = dimensions.width + 'px';
-      PILL.style.height = dimensions.height + 'px';
-      PILL.style.left = dimensions.left - MENU_LINKS_PARENT.getBoundingClientRect().left + 'px';
-
-      e.classList.add('active');
-    } else {
-      e.classList.remove('active');
-    }
-  });
-};
-
-setPill();
-</script>
-
 </html>
