@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emre Balci — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <h1 class="title">Emre Balcı</h1>
+      <p class="subtitle">Video Editor • Confidently jump cut your videos to perfection</p>
+    </div>
+  </header>
+
+  <main class="site-main container" id="top" role="main">
+
+    <section id="links" class="section" aria-labelledby="links-heading">
+      <h2 id="links-heading">Let me introduce myself</h2>
+      <ul class="link-list">
+        <li><a href="https://bionluk.com/ebalci" target="_blank" rel="noreferrer noopener">My portfolio</a></li>
+        <li><a href="mailto:mail@emrebalci.com.tr">My email</a></li>
+      </ul>
+    </section>
+
+    <section id="references" class="section" aria-labelledby="references-heading">
+      <h2 id="references-heading">Clients I work(ed) with</h2>
+      <div class="references">
+        <article class="reference">
+          <h3><a href="https://www.instagram.com/berkay_uzunyayla/">Berkay Uzunyayla</a> - Real Estate Agent</h3>
+          <p>
+            Creating professional videos for his real estate agency and personal social media account.
+          </p>
+        </article>
+        <article class="reference">
+          <h3><a href="https://www.zbtmedia.com/">ZBT Media </a> - Professional social media agency</h3>
+          <p>
+            Editing professional videos for their clients.
+          </p>
+        </article>
+        <article class="reference">
+          <h3><a href="https://www.hellospeak.com.tr/">HelloSpeak </a> - Language school</h3>
+          <p>
+            Creating and editing video lessons.
+          </p>
+        </article>
+        <article class="reference">
+          <h3><a href="https://www.instagram.com/imagineallin/">Imagineallin </a> - Digital marketing agency</h3>
+          <p>
+            Creating professional and view grabbing videos for their clients.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <nav class="floating-nav" role="navigation" aria-label="Primary">
+    <ul>
+      <li><a href="#links">Links</a></li>
+      <li><a href="#references">References</a></li>
+    </ul>
+  </nav>
+
+  <div class="theme-switcher" role="group" aria-label="Color theme selector">
+    <button class="theme-dot is-active" data-theme="default" aria-label="Use green theme" title="Green"></button>
+    <button class="theme-dot" data-theme="purple" aria-label="Use purple theme" title="Purple"></button>
+    <button class="theme-dot" data-theme="orange" aria-label="Use orange theme" title="Orange"></button>
+  </div>
+
+  <script>
+    (function() {
+      var storageKey = 'preferred-theme';
+      var root = document.documentElement;
+      var saved = localStorage.getItem(storageKey);
+      if (saved && saved !== 'default') {
+        root.setAttribute('data-theme', saved);
+      }
+      var current = root.getAttribute('data-theme') || 'default';
+      var buttons = document.querySelectorAll('.theme-dot');
+      buttons.forEach(function(btn) {
+        if (btn.getAttribute('data-theme') === current) {
+          btn.classList.add('is-active');
+        }
+        btn.addEventListener('click', function() {
+          var theme = btn.getAttribute('data-theme');
+          if (theme === 'default') {
+            root.removeAttribute('data-theme');
+          } else {
+            root.setAttribute('data-theme', theme);
+          }
+          localStorage.setItem(storageKey, theme);
+          buttons.forEach(function(b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+        });
+      });
+    })();
+  </script>
+  <script>
+    (function() {
+      var externalLinks = document.querySelectorAll('a[href^="http"], a[href^="mailto:"]');
+      externalLinks.forEach(function(a) {
+        a.setAttribute('target', '_blank');
+        var rel = a.getAttribute('rel') || '';
+        var parts = rel.split(' ').filter(Boolean);
+        if (parts.indexOf('noopener') === -1) parts.push('noopener');
+        if (parts.indexOf('noreferrer') === -1) parts.push('noreferrer');
+        a.setAttribute('rel', parts.join(' '));
+      });
+    })();
+  </script>
+</body>
+</html>
