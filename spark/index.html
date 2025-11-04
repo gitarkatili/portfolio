@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark - Project Idea Engine</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #1a1a1a;
+            --primary-color: #007aff;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .header .slogan {
+            font-size: 1.1rem;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .search-container {
+            position: relative;
+            z-index: 1001; 
+        }
+
+        .search-wrapper {
+            position: relative; 
+            display: flex;
+            align-items: center;
+            background-color: var(--card-bg);
+            border-radius: 50px; 
+            padding: 8px 10px 8px 25px; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 25px rgba(0, 122, 255, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1002;
+        }
+
+        .search-wrapper:focus-within {
+             box-shadow: 0 6px 30px rgba(0, 122, 255, 0.25);
+             border-color: var(--primary-color);
+
+        }
+
+        .iam-label {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-right: 10px;
+            color: #888;
+            white-space: nowrap;
+        }
+
+        #profession-input {
+            border: none;
+            outline: none;
+            font-size: 1.5rem;
+            font-weight: 500;
+            width: 100%;
+            background-color: transparent;
+            flex-grow: 1;
+        }
+
+        #submit-button {
+            border: none;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: background-color 0.2s ease;
+        }
+
+        #submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .professions-list {
+            position: absolute;
+            top: calc(100% - 25px); 
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+
+            border-bottom-left-radius: 30px; 
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 15px 25px rgba(0, 122, 255, 0.15);
+            z-index: 1001;
+            padding-top: 25px; 
+
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            visibility: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.2s ease-out, transform 0.3s ease-out;
+            transform: translateY(-10px);
+        }
+
+        .professions-list.is-visible {
+            max-height: 350px;
+            opacity: 1;
+            visibility: visible;
+            overflow-y: auto;
+            transform: translateY(0);
+        }
+
+        .professions-list-item {
+            padding: 14px 25px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .professions-list-item:hover {
+            background-color: #f4f7f6; 
+            color: var(--primary-color);
+            padding-left: 30px; 
+        }
+
+        .search-wrapper:focus-within + .professions-list {
+            max-height: 350px;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .difficulty-selector {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            background-color: #e9ecef;
+            border-radius: 50px;
+            padding: 6px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .difficulty-selector button {
+            border: none;
+            background-color: transparent;
+            color: #555;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .difficulty-selector button.active {
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .results-wrapper {
+            position: relative;
+            margin-top: 30px;
+            z-index: 990; 
+        }
+
+        #history-toggle {
+            position: absolute;
+            left: -80px; 
+            top: 15px;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: none;
+            place-items: center;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            padding: 0;
+        }
+
+        #history-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+            opacity: 1;
+        }
+
+        #history-toggle .icon-history,
+        #history-toggle .icon-close {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        #history-toggle .icon-close { display: none; }
+        #history-toggle.is-active {
+            background-color: var(--primary-color);
+            opacity: 1;
+        }
+        #history-toggle.is-active .icon-history { display: none; }
+        #history-toggle.is-active .icon-close { display: block; }
+
+        #card-container {
+            position: relative;
+            display: grid;
+            min-height: 200px;
+            transition: all 0.5s ease-in-out;
+        }
+
+        #placeholder-text {
+            color: #777;
+            font-size: 1.2rem;
+            align-self: center;
+            padding: 30px;
+        }
+
+        .idea-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            grid-area: 1 / 1;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            cursor: pointer;
+        }
+
+        .idea-card:not(:first-child) { user-select: none; }
+        .idea-card:nth-child(1) { z-index: 100; transform: rotate(0deg); }
+        .idea-card:nth-child(2) { z-index: 99; transform: scale(0.98) translateY(12px) rotate(2deg); }
+        .idea-card:nth-child(3) { z-index: 98; transform: scale(0.96) translateY(24px) rotate(-3deg); }
+        .idea-card:nth-child(n+4) { z-index: 97; transform: scale(0.94) translateY(36px); opacity: 0; }
+
+        .idea-card:hover:not(:first-child) {
+            transform: scale(1.02);
+        }
+
+        #card-container.is-expanded {
+            display: flex;
+            flex-direction: column; 
+            gap: 20px;
+        }
+
+        #card-container.is-expanded .idea-card {
+            position: relative;
+            opacity: 1;
+            transform: none !important;
+            cursor: default;
+        }
+
+        .idea-card p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .idea-card .prompt-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 767px) {
+            #history-toggle {
+
+                display: none !important; 
+            }
+
+            .idea-card {
+
+                cursor: default;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>Spark</h1>
+            <p class="slogan">Find your next creative challenge.</p>
+        </div>
+
+        <div class="search-container">
+            <div class="search-wrapper">
+                <span class="iam-label">I am</span>
+                <input type="text" id="profession-input" placeholder="a developer..." autocomplete="off">
+                <button id="submit-button" title="Get Idea">
+                    &rarr;
+                </button>
+            </div>
+
+            <div id="professions-dropdown" class="professions-list">
+                </div>
+        </div>
+
+        <div class="difficulty-selector" id="difficulty-selector">
+            <button classFame="active" data-difficulty="easy">Easy</button>
+            <button data-difficulty="medium">Medium</button>
+            <button data-difficulty="hard">Hard</button>
+        </div>
+
+        <div class="results-wrapper">
+            <button id="history-toggle" title="Toggle History">
+                <svg class="icon-history" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 4v6h6"></path>
+                  <path d="M3.51 15a9 9 0 1 0 2.19-9.51L1 10"></path>
+                </svg>
+                <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div id="card-container">
+                <div id="placeholder-text">
+                    <p>Your project idea will appear here. Type your profession and press 'Enter' or click the arrow to start.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const ideaBank = {
+            "graphic designer": { "easy": ["..."], "medium": ["..."], "hard": ["..."] },
+            "video editor": { "easy": ["..."], "medium": ["..."], "hard": ["..."] },
+            "developer": { "easy": ["..."], "medium": ["..."], "hard": ["..."] },
+            "writer": { "easy": ["..."], "medium": ["..."], "hard": ["..."] },
+            "photographer": { "easy": ["..."], "medium": ["..."], "hard": ["..."] },
+             "musician": {
+                "easy": ["Write a 4-chord progression.", "Record 3 everyday sounds and make a simple beat.", "Learn to play a simple melody from your favorite song by ear."],
+                "medium": ["Produce a 1-minute track in a genre you never tried before.", "Write a short song (verse, chorus) based on the last text message you sent.", "Recreate the main drum beat of a famous pop song."],
+                "hard": ["Compose and record a 3-minute song with at least 5 different layers (drums, bass, rhythm, lead, vocals).", "Take a song in a major key and rewrite it in a minor key.", "Score a 1-minute silent film clip to give it a specific mood (e.g., horror, comedy)."]
+            },
+            "ui/ux designer": {
+                "easy": ["Design a perfect 'login' button.", "Wireframe a simple 'contact us' page.", "Choose a bad app you use and redesign just one screen to be better."],
+                "medium": ["Design the user flow and wireframes for a 'password reset' journey.", "Create a high-fidelity design for a 3-screen 'onboarding' flow for a mobile app.", "Conduct a 5-minute 'usability test' on a friend using a popular website."],
+                "hard": ["Design a complete 'design system' (colors, fonts, components) for a fictional brand.", "Research and design a high-fidelity prototype for a new feature for Spotify or Netflix.", "Design a full checkout process for an e-commerce site, from 'cart' to 'confirmation'."]
+            },
+            "illustrator": {
+                "easy": ["Draw your favorite animal in 3 different styles (e.g., cartoon, geometric, realistic).", "Create a 'spot illustration' for an article about 'coffee'.", "Draw 5 different hand gestures."],
+                "medium": ["Illustrate a 'character' based on a random word (e.g., 'grumpy', 'floating', 'electric').", "Design a custom icon set (6 icons) for a weather app.", "Create a simple looping animation (GIF) of a bouncing ball."],
+                "hard": ["Illustrate a full-page 'editorial' image for a complex concept (e.g., 'online privacy').", "Design a character turnaround sheet (front, side, back view).", "Create a complex isometric illustration of a room."]
+            }
+        };
+
+        ideaBank["graphic designer"] = { "easy": ["Design a social media icon using only 3 circles.", "Create a vintage-style 'New Product' badge.", "Pick a random photo and extract a 5-color palette from it.", "Design a 'Welcome' banner using only different weights (light, bold) of a single font family.", "Design a 'Settings' icon for a mobile app (iOS or Material style)."], "medium": ["Design a beer bottle label. Use only two colors and mainly sans-serif fonts.", "Design a logo for a fictional coffee shop called 'Moon Dust'.", "Design a minimalist poster for your favorite movie.", "Design a main screen UI card for a 'Weather App' (Sunny, Rainy, etc.).", "Design a small product package (jar label) for an organic honey producer."], "hard": ["Rebrand a famous brand (e.g., Coca-Cola) for a completely opposite industry (e.g., a luxury watch brand).", "Design a full tri-fold (3-panel) brochure for a fictional tech product.", "Design a detailed infographic that explains a complex process (e.g., the journey of coffee from bean to cup).", "Create a complete visual identity kit (logo, poster, social media post, ticket) for a music festival.", "Design two separate posters that express the words 'Chaos' and 'Order' using only typography."] };
+        ideaBank["video editor"] = { "easy": ["Create a simple 5-second logo animation (sting).", "Find 10 short clips and create a 15-second 'fast-cut' montage synchronized to music.", "Add kinetic typography (moving text) to a 10-second audio clip.", "Apply a 'glitch' effect to a clip and use it as a transition.", "Combine 3 stock videos and apply cinematic color grading."], "medium": ["Edit a 1-minute 'travel vlog' using only free stock footage.", "Create a 30-second fictional movie trailer for a comedy.", "Take a dramatic movie scene; re-edit it with different music, sound effects, and cuts to make it feel like a horror scene.", "Shoot and edit a 60-second, overly dramatic 'commercial' for an everyday object (e.g., a pen).", "Edit a 1-minute section of a music video, focusing on perfecting the lip-sync cuts."], "hard": ["Edit a 1-3 minute short film that tells a story *without any dialogue*, using only music and sound effects.", "Create a 'one-take' (single shot) style video scene that uses hidden cuts.", "Take 5 completely unrelated stock videos (e.g., a running man, an erupting volcano, a laughing baby) and edit them together to tell a coherent story.", "Create an 'Apple-style' product launch video for a real product (e.g., your phone).", "Edit an interview with two people describing the same event, using parallel editing to create a 'Rashomon' effect."] };
+        ideaBank["developer"] = { "easy": ["Make a simple 'Click Counter' button that increments a number on click.", "Build an 'Accordion' (FAQ) component that expands and collapses.", "Create a 'Light/Dark Mode' theme toggle button for a webpage.", "Code a simple 'Modal/Popup' box that appears when a button is clicked.", "Make a counter that shows the real-time character count of a text area."], "medium": ["Build a simple 'To-Do List' app (Add, Delete, Mark as Complete).", "Code a 'Pomodoro' timer (25 min work, 5 min break).", "Fetch data from a free API (e.g., a weather API) and display it on the page.", "Create a 'Color Picker' UI where a user can input a hex code (#FF0000) and see the color live.", "Build a 'Password Generator' with options for length and special characters."], "hard": ["Build a real-time 'Chat' application using Firebase or Supabase.", "Code the classic 'Snake' game from scratch using JavaScript.", "Code a 'Shopping Cart' functionality for an e-commerce site (Add to Cart, View Cart) using Local Storage.", "Build a 'Markdown Editor' using React or Vue (text typed on the left is rendered as HTML on the right).", "Code a UI that visualizes a simple pathfinding algorithm like 'A*' (A-Star) on a grid."] };
+        ideaBank["writer"] = { "easy": ["Write a 100-word description of a color without using the name of the color.", "Write a 6-word story that implies a complex backstory.", "Describe your morning routine from the perspective of your coffee mug.", "Write a 'how-to' guide for an impossible task (e.g., 'How to Fold the Wind').", "Take a simple nursery rhyme and rewrite it as a dramatic news headline."], "medium": ["Write a 1-page short story where the main character is an inanimate object (e.g., a lost coin).", "Write a dialogue-only scene (no descriptions or action tags) between two people having a secret argument in public.", "Write a compelling product description for a useless product (e.g., 'A solar-powered flashlight').", "Write the 'villain's monologue' explaining *why* they are right, and make it persuasive.", "Find a random word in the dictionary and write a 300-word story that must use it."], "hard": ["Write the first chapter of a novel where the protagonist and the antagonist are best friends.", "Write a short story that is a 'palindromic' story (it reads the same, or makes sense, forwards and backwards).", "Write a review of a classic book (e.g., 'Moby Dick') from the perspective of a modern-day influencer.", "Write a compelling story where the narrator is unreliable, slowly revealing their bias or delusion.", "Choose two random, unrelated genres (e.g., 'Sci-Fi' and 'Western') and write the opening scene of a story that blends them perfectly."] };
+        ideaBank["photographer"] = { "easy": ["Take 5 photos of a single household object (like a spoon or a key) from unusual angles.", "Capture a photo that perfectly demonstrates the 'rule of thirds'.", "Find and photograph three different textures (e.g., rough wood, smooth glass, crinkled paper).", "Take a compelling 'self-portrait' without showing your face (e.g., using shadows or reflections).", "Capture a photo that uses 'leading lines' to draw the viewer's eye."], "medium": ["Go for a 30-minute walk and capture 3 photos that perfectly represent 'motion' (e.g., using motion blur).", "Set up and photograph a 'still life' using 3 items from your kitchen. Focus on the lighting.", "Take a photo of a building at night, focusing on capturing the light trails from cars (long exposure).", "Find a stranger (with permission) and take a 1-minute 'environmental portrait' that tells a story about who they are.", "Create a photo that heavily uses 'negative space' to create a feeling of loneliness or peace."], "hard": ["Create a 'forced perspective' photograph that tells a story (e.g., a person 'holding' the sun or 'drinking' from a waterfall).", "Recreate the lighting and mood of a famous Renaissance painting using only modern, household items and lights.", "Create a surreal photo composite (Photoshop/GIMP) that blends two completely different worlds (e.g., an ocean in the desert).", "Tell a 5-photo 'story' in a sequence, with no words, just images.", "Capture a 'high-speed' photograph that freezes a moment in time (e.g., a water balloon popping, a dice being thrown)."] };
+
+        const input = document.getElementById('profession-input');
+        const submitButton = document.getElementById('submit-button');
+        const difficultySelector = document.getElementById('difficulty-selector');
+        const cardContainer = document.getElementById('card-container');
+        const historyToggle = document.getElementById('history-toggle');
+        const placeholderText = document.getElementById('placeholder-text');
+
+        const searchContainer = document.querySelector('.search-container');
+        const professionsDropdown = document.getElementById('professions-dropdown');
+        const professionList = [
+            "Graphic Designer", "Video Editor", "Developer", "Writer", 
+            "Photographer", "Musician", "UI/UX Designer", "Illustrator"
+        ];
+
+        let currentDifficulty = 'easy';
+        let cardCount = 0;
+
+        function populateDropdown() {
+            professionsDropdown.innerHTML = ''; 
+            professionList.forEach(profession => {
+                const item = document.createElement('div');
+                item.classList.add('professions-list-item');
+                item.textContent = profession;
+
+                item.addEventListener('click', () => {
+                    input.value = profession; 
+                    hideDropdown();
+                    input.blur(); 
+                });
+                professionsDropdown.appendChild(item);
+            });
+        }
+
+        function showDropdown() {
+            professionsDropdown.classList.add('is-visible');
+        }
+        function hideDropdown() {
+            professionsDropdown.classList.remove('is-visible');
+        }
+
+        function filterDropdown() {
+            const filter = input.value.toLowerCase();
+            const items = professionsDropdown.querySelectorAll('.professions-list-item');
+
+            items.forEach(item => {
+                const itemText = item.textContent.toLowerCase();
+                if (itemText.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        difficultySelector.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                difficultySelector.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentDifficulty = e.target.dataset.difficulty;
+            }
+        });
+
+        input.addEventListener('input', filterDropdown);
+        input.addEventListener('focus', filterDropdown);
+
+        document.addEventListener('click', (e) => {
+            if (!searchContainer.contains(e.target)) {
+                hideDropdown();
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && input.value.length > 0) {
+                e.preventDefault(); 
+                input.value = '';  
+                filterDropdown();   
+                return; 
+            }
+
+            if (e.key === 'Enter') {
+                getIdea();
+                hideDropdown();
+                input.blur(); 
+            }
+        });
+
+        submitButton.addEventListener('click', () => {
+            getIdea();
+            hideDropdown();
+            input.blur(); 
+        });
+
+        historyToggle.addEventListener('click', () => {
+            cardContainer.classList.toggle('is-expanded');
+            historyToggle.classList.toggle('is-active');
+        });
+
+        cardContainer.addEventListener('click', (e) => {
+
+            if (window.matchMedia("(max-width: 767px)").matches) {
+
+                if (cardCount > 1) {
+
+                    cardContainer.classList.toggle('is-expanded');
+
+                    historyToggle.classList.toggle('is-active');
+                }
+            }
+        });
+
+        function getIdea() {
+            let profession = input.value.trim().toLowerCase();
+
+            if (ideaBank.hasOwnProperty(profession)) {
+                if (cardCount === 0 && placeholderText) {
+                    placeholderText.remove();
+                }
+
+                const ideas = ideaBank[profession][currentDifficulty];
+                const randomIndex = Math.floor(Math.random() * ideas.length);
+                const randomIdea = ideas[randomIndex];
+
+                const newCard = document.createElement('div');
+                newCard.classList.add('idea-card');
+                newCard.innerHTML = `
+                    <div class="prompt-label">${input.value.trim()} / ${currentDifficulty} Project</div>
+                    <p>${randomIdea}</p>
+                `;
+
+                cardContainer.prepend(newCard);
+                cardCount++;
+
+                if (cardContainer.classList.contains('is-expanded')) {
+                    cardContainer.classList.remove('is-expanded');
+                    historyToggle.classList.remove('is-active');
+                }
+
+                if (cardCount > 1) {
+
+                    if (!window.matchMedia("(max-width: 767px)").matches) {
+                         historyToggle.style.display = 'grid';
+                    }
+                }
+
+            } else {
+
+                if (cardCount === 0 && placeholderText) {
+                     placeholderText.innerHTML = `<p style="color: red;">Please select a profession from the list (e.g., Developer, Video Editor).</p>`;
+                } else {
+                     const errorCard = document.createElement('div');
+                     errorCard.classList.add('idea-card');
+                     errorCard.innerHTML = `
+                        <div class="prompt-label">Error</div>
+                        <p>Please select a profession from the list (e.g., Developer, Video Editor).</p>
+                    `;
+                     cardContainer.prepend(errorCard);
+                     cardCount++;
+                }
+            }
+        }
+
+        
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.difficulty-selector button[data-difficulty="easy"]').classList.add('active');
+            populateDropdown(); 
+
+            ideaBank["graphic designer"] = { "easy": ["Design a social media icon using only 3 circles.", "Create a vintage-style 'New Product' badge.", "Pick a random photo and extract a 5-color palette from it.", "Design a 'Welcome' banner using only different weights (light, bold) of a single font family.", "Design a 'Settings' icon for a mobile app (iOS or Material style)."], "medium": ["Design a beer bottle label. Use only two colors and mainly sans-serif fonts.", "Design a logo for a fictional coffee shop called 'Moon Dust'.", "Design a minimalist poster for your favorite movie.", "Design a main screen UI card for a 'Weather App' (Sunny, Rainy, etc.).", "Design a small product package (jar label) for an organic honey producer."], "hard": ["Rebrand a famous brand (e.g., Coca-Cola) for a completely opposite industry (e.g., a luxury watch brand).", "Design a full tri-fold (3-panel) brochure for a fictional tech product.", "Design a detailed infographic that explains a complex process (e.g., the journey of coffee from bean to cup).", "Create a complete visual identity kit (logo, poster, social media post, ticket) for a music festival.", "Design two separate posters that express the words 'Chaos' and 'Order' using only typography."] };
+            ideaBank["video editor"] = { "easy": ["Create a simple 5-second logo animation (sting).", "Find 10 short clips and create a 15-second 'fast-cut' montage synchronized to music.", "Add kinetic typography (moving text) to a 10-second audio clip.", "Apply a 'glitch' effect to a clip and use it as a transition.", "Combine 3 stock videos and apply cinematic color grading."], "medium": ["Edit a 1-minute 'travel vlog' using only free stock footage.", "Create a 30-second fictional movie trailer for a comedy.", "Take a dramatic movie scene; re-edit it with different music, sound effects, and cuts to make it feel like a horror scene.", "Shoot and edit a 60-second, overly dramatic 'commercial' for an everyday object (e.g., a pen).", "Edit a 1-minute section of a music video, focusing on perfecting the lip-sync cuts."], "hard": ["Edit a 1-3 minute short film that tells a story *without any dialogue*, using only music and sound effects.", "Create a 'one-take' (single shot) style video scene that uses hidden cuts.", "Take 5 completely unrelated stock videos (e.g., a running man, an erupting volcano, a laughing baby) and edit them together to tell a coherent story.", "Create an 'Apple-style' product launch video for a real product (e.g., your phone).", "Edit an interview with two people describing the same event, using parallel editing to create a 'Rashomon' effect."] };
+            ideaBank["developer"] = { "easy": ["Make a simple 'Click Counter' button that increments a number on click.", "Build an 'Accordion' (FAQ) component that expands and collapses.", "Create a 'Light/Dark Mode' theme toggle button for a webpage.", "Code a simple 'Modal/Popup' box that appears when a button is clicked.", "Make a counter that shows the real-time character count of a text area."], "medium": ["Build a simple 'To-Do List' app (Add, Delete, Mark as Complete).", "Code a 'Pomodoro' timer (25 min work, 5 min break).", "Fetch data from a free API (e.g., a weather API) and display it on the page.", "Create a 'Color Picker' UI where a user can input a hex code (#FF0000) and see the color live.", "Build a 'Password Generator' with options for length and special characters."], "hard": ["Build a real-time 'Chat' application using Firebase or Supabase.", "Code the classic 'Snake' game from scratch using JavaScript.", "Code a 'Shopping Cart' functionality for an e-commerce site (Add to Cart, View Cart) using Local Storage.", "Build a 'Markdown Editor' using React or Vue (text typed on the left is rendered as HTML on the right).", "Code a UI that visualizes a simple pathfinding algorithm like 'A*' (A-Star) on a grid."] };
+            ideaBank["writer"] = { "easy": ["Write a 100-word description of a color without using the name of the color.", "Write a 6-word story that implies a complex backstory.", "Describe your morning routine from the perspective of your coffee mug.", "Write a 'how-to' guide for an impossible task (e.g., 'How to Fold the Wind').", "Take a simple nursery rhyme and rewrite it as a dramatic news headline."], "medium": ["Write a 1-page short story where the main character is an inanimate object (e.g., a lost coin).", "Write a dialogue-only scene (no descriptions or action tags) between two people having a secret argument in public.", "Write a compelling product description for a useless product (e.g., 'A solar-powered flashlight').", "Write the 'villain's monologue' explaining *why* they are right, and make it persuasive.", "Find a random word in the dictionary and write a 300-word story that must use it."], "hard": ["Write the first chapter of a novel where the protagonist and the antagonist are best friends.", "Write a short story that is a 'palindromic' story (it reads the same, or makes sense, forwards and backwards).", "Write a review of a classic book (e.g., 'Moby Dick') from the perspective of a modern-day influencer.", "Write a compelling story where the narrator is unreliable, slowly revealing their bias or delusion.", "Choose two random, unrelated genres (e.g., 'Sci-Fi' and 'Western') and write the opening scene of a story that blends them perfectly."] };
+            ideaBank["photographer"] = { "easy": ["Take 5 photos of a single household object (like a spoon or a key) from unusual angles.", "Capture a photo that perfectly demonstrates the 'rule of thirds'.", "Find and photograph three different textures (e.g., rough wood, smooth glass, crinkled paper).", "Take a compelling 'self-portrait' without showing your face (e.g., using shadows or reflections).", "Capture a photo that uses 'leading lines' to draw the viewer's eye."], "medium": ["Go for a 30-minute walk and capture 3 photos that perfectly represent 'motion' (e.g., using motion blur).", "Set up and photograph a 'still life' using 3 items from your kitchen. Focus on the lighting.", "Take a photo of a building at night, focusing on capturing the light trails from cars (long exposure).", "Find a stranger (with permission) and take a 1-minute 'environmental portrait' that tells a story about who they are.", "Create a photo that heavily uses 'negative space' to create a feeling of loneliness or peace."], "hard": ["Create a 'forced perspective' photograph that tells a story (e.g., a person 'holding' the sun or 'drinking' from a waterfall).", "Recreate the lighting and mood of a famous Renaissance painting using only modern, household items and lights.", "Create a surreal photo composite (Photoshop/GIMP) that blends two completely different worlds (e.g., an ocean in the desert).", "Tell a 5-photo 'story' in a sequence, with no words, just images.", "Capture a 'high-speed' photograph that freezes a moment in time (e.g., a water balloon popping, a dice being thrown)."] };
+        });
+
+    </script>
+</body>
+</html>
