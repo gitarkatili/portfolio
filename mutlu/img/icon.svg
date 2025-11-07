@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Group_15" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 170.4 155" style="enable-background:new 0 0 170.4 155;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#D51317;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#892522;}
+	.st2{fill:url(#SVGID_1_);}
+</style>
+<g>
+	<g>
+		<polyline class="st0" points="0,0 0,155 46.9,127.2 46.9,83.2 85.2,104.9 85.2,104.9 85.2,49.5 		"/>
+		<polygon class="st1" points="5.8,59 46.9,83.3 46.9,105 		"/>
+	</g>
+	<g>
+		
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="1862.425" y1="-1506.488" x2="1777.2169" y2="-1506.488" gradientTransform="matrix(1 0 0 1 -1692 1584)">
+			<stop  offset="0" style="stop-color:#D51317"/>
+			<stop  offset="0.9922" style="stop-color:#892522"/>
+			<stop  offset="1" style="stop-color:#892522"/>
+		</linearGradient>
+		<polyline class="st2" points="170.4,0 170.4,155 123.5,127.2 123.5,83.2 85.2,104.9 85.2,104.9 85.2,49.5 		"/>
+		<polygon class="st1" points="164.7,59 123.5,83.3 123.5,105 		"/>
+	</g>
+</g>
+</svg>
