@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutlu Albayrak İnşaat - Anasayfa Taslağı</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/fdf810b10f.js" crossorigin="anonymous"></script>
+
+    <style>
+
+        :root {
+            --primary-color: #B22222; 
+            --secondary-color: #f4f4f4;
+            --text-color: #333;
+            --container-width: 1100px;
+            --accent-color: #B22222; 
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden; 
+        }
+
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 { color: var(--primary-color); }
+        h2 { text-align: center; font-size: 2.2rem; margin-bottom: 2rem; }
+        section { padding: 3rem 0; }
+
+        header {
+            font-family: 'Roboto', sans-serif;
+            background: transparent; 
+            border-bottom: 1px solid transparent; 
+            padding: 0.25rem 0; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-sizing: border-box;
+            transition: background-color 0.4s ease-out, padding 0.4s ease-out, border-color 0.4s ease-out;
+            font-size: 0.9rem;
+        }
+
+        header.sticky {
+            position: fixed;
+            background: rgba(255, 255, 255, 1); 
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0.5rem 0; 
+            height: 70px;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 50px; 
+            height: 50px;
+            margin-right: 10px;
+            margin-top: 10px;
+            object-fit: center;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-family: 'Roboto', sans-serif;
+            padding-bottom: 8px;
+            transition: border-color 0.4s ease-out;
+        }
+
+        header.sticky .header-right {
+            padding-bottom: 0px;
+            border-bottom-color: #ddd;
+        }
+
+        header.sticky .logo img {
+            width: 60px;
+            height: 60px;
+            margin-top: -3px;
+        }
+
+        nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
+        nav li { margin-left: 2rem; }
+
+        nav a { 
+            text-decoration: none; 
+            color: white; 
+            font-weight: 600; 
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: #ddd; }
+
+        header.sticky nav a { color: #555; }
+        header.sticky nav a:hover { color: var(--primary-color); }
+
+        .phone-number {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .phone-number i {
+            width: 18px;
+            height: 14px;
+            margin-right: 10px;
+            fill: white;
+            transition: fill 0.3s;
+        }
+
+        header.sticky .phone-number { color: var(--text-color); }
+
+        header.sticky .phone-number i {
+            fill: var(--text-color);
+            color: var(--text-color); 
+        }
+
+        #hero-slider {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: #333;
+            padding: 0;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.1s ease-in-out;
+        }
+
+        .slide.active { 
+            opacity: 1; 
+            transform: scale(1);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,0.85) 100%);
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            z-index: 2;
+            color: white;
+            max-width: 600px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .slide-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        .slide-content p {
+            font-size: 1.4rem;
+            margin: 1rem 0 2rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+        }
+
+        .slide-content .btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: background-color 0.2s ease-out;
+        }
+
+        .slide-content .btn:hover { background: var(--accent-color); }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            user-select: none;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            color: white;
+            z-index: 2;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .slider-arrow.prev { left: 2rem; }
+        .slider-arrow.next { right: 2rem; }
+        .slider-arrow:hover { background-color: var(--accent-color); }
+
+        .scroll-down-arrow {
+            color: rgba(255, 255, 255, 0.85);
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            z-index: 2;
+            font-size: 1.2rem;
+            animation: bounce 1s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateX(-50%) translateY(12px);
+                opacity: 1;
+            }
+        }
+
+        #quick-access {
+            background: var(--secondary-color);
+            padding: 1rem 0; 
+        }
+
+        #quick-access .container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        #quick-access a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 800;
+            padding: 0.75rem 1.25rem;
+            transition: color 0.5s;
+        }
+
+        #quick-access a:hover { color: var(--text-color); }
+
+        #hakkimizda { background: #fff; }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr; 
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-text p {
+            font-size: 1.1rem; 
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        #tanitim { background: var(--secondary-color); }
+        #tanitim .video-wrapper { max-width: 900px; margin: 0 auto; border: 5px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        #promo-video { width: 100%; display: block; }
+
+        #kalite-politikasi { background: #fff; }
+
+        #kalite-politikasi ul { 
+            list-style: none; 
+            padding: 0;
+            max-width: 100%; 
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        #kalite-politikasi li { 
+            font-size: 1rem; 
+            margin-bottom: 0;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            border-radius: 8px;
+            padding: 1.5rem;
+            padding-left: 3.5rem;
+            position: relative;
+        }
+        #kalite-politikasi li::before { 
+            content: '✓'; 
+            position: absolute; 
+            left: 1.25rem; 
+            top: 1.6rem; 
+            font-size: 1.5rem; 
+            color: var(--primary-color); 
+            font-weight: bold; 
+        }
+
+        #misyon-vizyon { background: var(--secondary-color); }
+        .mission-vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .mission-vision-grid div { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        .mission-vision-grid h3 { 
+            font-size: 1.8rem; 
+            margin-top: 0; 
+            border-bottom: 2px solid var(--primary-color); 
+            padding-bottom: 0.5rem; 
+
+            position: relative; 
+            padding-left: 2.8rem; 
+            display: flex;
+            align-items: center;
+            min-height: 40px;
+        }
+
+        .mission-vision-grid h3::before {
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 900; 
+            position: absolute; 
+            left: 0; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            font-size: 1.7rem; 
+            color: var(--primary-color);
+        }
+        .mission-vision-grid .mission h3::before { content: '\f140';  }
+        .mission-vision-grid .vision h3::before { content: '\f06e';  }
+
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            header .container { flex-direction: column; gap: 0.5rem; }
+            .header-right { flex-direction: column; gap: 1rem; }
+            nav ul { justify-content: center; padding: 0; }
+            nav li { margin: 0 0.75rem; }
+            .slide-content { left: 5%; bottom: 15%; width: 90%; }
+            .slide-content h1 { font-size: 2.5rem; }
+            .slide-content p { font-size: 1.1rem; }
+            .slider-arrow { width: 45px; height: 45px; font-size: 2rem; }
+            .slider-arrow.prev { left: 1rem; }
+            .slider-arrow.next { right: 1rem; }
+            h2 { font-size: 1.8rem; }
+            #quick-access .container { flex-direction: column; align-items: center; }
+            #quick-access a { margin-bottom: 0.5rem; width: 80%; text-align: center; }
+
+            .about-grid { 
+                grid-template-columns: 1fr; 
+                gap: 2rem;
+            }
+            .about-image { 
+                grid-row: 1; 
+            }
+            .about-text p {
+                font-size: 1rem;
+            }
+
+            .mission-vision-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        .animated-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animated-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="img/icon.svg" alt="Mutlu Albayrak İnşaat Logosu">
+            </a>
+            <div class="header-right">
+                <nav>
+                    <ul>
+                        <li><a href="#projeler">PROJELER</a></li>
+                        <li><a href="#proje-haritasi">PROJE HARİTASI</a></li>
+                        <li><a href="#iletisim">İLETİŞİM</a></li>
+                    </ul>
+                </nav>
+                <a href="tel:4440588" class="phone-number">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>444 0 588</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero-slider">
+            <div class="slide active" style="background-image: url('https://images.pexels.com/photos/258846/pexels-photo-258846.jpeg');">
+                <div class="slide-content">
+                    <h1>Modern Mimari</h1>
+                    <p>Şehre değer katan yenilikçi tasarımlar.</p>
+                    <a href="#hakkimizda" class="btn">Hakkımızda</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.pexels.com/photos/421927/pexels-photo-421927.jpeg');">
+                <div class="slide-content">
+                    <h1>Kaliteli Yaşam Alanları</h1>
+                    <p>Güven ve tecrübeyle geleceği inşa ediyoruz.</p>
+                    <a href="#projeler" class="btn">Projelerimizi İnceleyin</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.pexels.com/photos/5309172/pexels-photo-5309172.jpeg');">
+                <div class="slide-content">
+                    <h1>300.000 m² Deneyim</h1>
+                    <p>Uzman kadromuzla taahhüt işlerinizde yanınızdayız.</p>
+                    <a href="#kalite-politikasi" class="btn">Kalite Politikamız</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.pexels.com/photos/5309158/pexels-photo-5309158.jpeg');">
+                <div class="slide-content">
+                    <h1>Geleceğe Güvenle Bakın</h1>
+                    <p>Hayalinizdeki yapı için bize ulaşın.</p>
+                    <a href="#iletisim" class="btn">Bize Ulaşın</a>
+                </div>
+            </div>
+
+            <div class="slider-arrow prev"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="slider-arrow next"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <a href="#quick-access-st" class="scroll-down-arrow">
+                <i class="fa-solid fa-angles-down" id="quick-access-st"></i>
+            </a>
+        </section>
+
+        <section id="quick-access">
+            <div class="container">
+                <a href="#hakkimizda">HAKKIMIZDA</a>
+                <a href="#tanitim">TANITIM FİLMİ</a>
+                <a href="#kalite-politikasi">KALİTE POLİTİKASI</a>
+                <a href="#misyon-vizyon">MİSYON VE VİZYON</a>
+            </div>
+        </section>
+
+        <section id="hakkimizda" class="animated-section">
+            <div class="container">
+                <h2>Hakkımızda</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>
+                            2016 yılında kurulan Mutlu Albayrak İnşaat, Birkan Hamzaoğlu ve Emrullah Albayrak yönetiminde...
+                        </p>
+                        <p>
+                            Gelecekteki hedefimiz ülkemizde üstleneceğimiz müteahhitlik ve taahhüt işlerinde kaliteli ve güvenli
+                            yapılar inşa ederek insanlara güvenli yaşam alanları sunmaktır.
+                        </p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.pexels.com/photos/1117493/pexels-photo-1117493.jpeg" alt="Hakkımızda Görseli">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tanitim" class="animated-section">
+            <div class="container">
+                <h2>Tanıtım Filmi</h2>
+                <div class="video-wrapper">
+                    <video id="promo-video" loop muted playsinline>
+                        <source src="https://videos.pexels.com/video-files/3214438/3214438-hd_1920_1080_25fps.mp4" type="video/mp4">
+                        Tarayıcınız video etiketini desteklemiyor.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section id="kalite-politikasi" class="animated-section">
+            <div class="container">
+                <h2>Kalite Politikası</h2>
+                <ul>
+                    <li>
+                        Mutlu Albayrak İnşaat olarak altyapı ve üstyapı projelerinde...
+                    </li>
+                    <li>
+                        Müşteri ihtiyaçlarını ve beklentilerini dikkate alarak...
+                    </li>
+                    <li>
+                        Kaynaklarımızı en etkin ve verimli bir şekilde kullanarak...
+                    </li>
+                    <li>
+                        Çalışanlarımızın katılımı ile sürekli iyileştirme sağlayarak...
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="misyon-vizyon" class="animated-section">
+            <div class="container">
+                <div class="mission-vision-grid">
+                    <div class="mission">
+                        <h3>Misyon</h3>
+                        <p>
+                            İnsanların yaşam kalitesini yükselten, dürüstlük ve şeffaflık ilkeleriyle...
+                        </p>
+                    </div>
+                    <div class="vision">
+                        <h3>Vizyon</h3>
+                        <p>
+                            Yurt içinde kaliteli mühendislik hizmeti almış projelerle fark yaratarak...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mutlu Albayrak İnşaat. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const slides = document.querySelectorAll("#hero-slider .slide");
+            const prev = document.querySelector("#hero-slider .prev");
+            const next = document.querySelector("#hero-slider .next");
+
+            let currentSlide = 0;
+            const slideCount = slides.length;
+
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove("active"));
+                slides[n].classList.add("active");
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slideCount;
+                showSlide(currentSlide);
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+                showSlide(currentSlide);
+            }
+
+            next.addEventListener("click", nextSlide);
+            prev.addEventListener("click", prevSlide);
+
+            const header = document.querySelector("header");
+            const stickyThreshold = 50; 
+
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > stickyThreshold) {
+                    header.classList.add("sticky");
+                } else {
+                    header.classList.remove("sticky");
+                }
+            });
+
+            const video = document.getElementById("promo-video");
+
+            if (video) { 
+                const observerOptions = {
+                    root: null,
+                    rootMargin: "0px",
+                    threshold: 0.5 
+                };
+
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            video.play();
+                        } else {
+                            video.pause();
+                        }
+                    });
+                }, observerOptions);
+
+                videoObserver.observe(video);
+            }
+
+            const animatedSections = document.querySelectorAll(".animated-section");
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 }); 
+
+            animatedSections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
